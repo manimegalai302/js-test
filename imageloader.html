@@ -4,55 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>image loader</title>
-    <style>
-    img{
-        display: grid;
-     justify-content: center;
-     align-items: center;
-    }
-    </style>
 </head>
 <body>
-    <h1>Image Loading with Promises</h1>
-    <button id="loaderButton">Load Images</button>
-    <div id="content"></div>
+    <h1>image loader</h1>
+    <button onclick="fetchData()">loader</button>
+    <p id="content"></p>
     <script>
-        async function loadImage(src) {
-            return new Promise((resolve, reject) => {
-                let img = new Image();
-                img.onload = () => resolve(img);
-                img.onerror = reject;
-                img.src = src;
-            });
-        }
-
         async function fetchData() {
             try {
                 let content = document.getElementById("content");
-                content.innerHTML = ''; // Clear existing content
                 let url = "https://fakestoreapi.com/products";
                 let response = await fetch(url);
                 let data = await response.json();
                 
-                for (const value of data) {
-                    let pic = document.createElement("div");
-                    try {
-                        let image = await loadImage(value.image);
-                        image.style.width = "15%";
-                        image.style.height = "10%";
-                        pic.appendChild(image);
-                    } catch (error) {
-                        console.error("Error loading image:", error);
-                    }
+                data.forEach((value) => {
+                    let pic = document.createElement("img");
+                    pic.src = value.image;
+                    pic.style.width = "15%";
+                    pic.style.height = "10%";
                     content.appendChild(pic);
-                }
+                });
             } catch (error) {
                 throw new Error("An error occurred: " + error.message);
             }
         }
-
-        const loaderButton = document.getElementById("loaderButton");
-        loaderButton.addEventListener("click", fetchData);
     </script>
 </body>
 </html>
