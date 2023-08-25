@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mouse Tracking</title>
+    <style>
+        body{
+            background-color: #e6e6fa;
+            display: grid;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Mouse Tracking</h1>
+    <p>Move your mouse to track its position:</p>
+    <p id="mousePosition">Mouse position: X : , Y : </p>
+    <script>
+        const mousePositionDisplay = document.getElementById("mousePosition");
+
+        document.addEventListener("mousemove", (event) => {
+            const mouseX = event.clientX;
+            const mouseY = event.clientY;
+            mousePositionDisplay.textContent = `Mouse position: X - ${mouseX}, Y - ${mouseY}`;
+        });
+    </script>
+</body>
+</html>

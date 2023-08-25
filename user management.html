@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Data Management</title>
+    <style>
+        body{
+            background-color: #f0f0a5;
+        }
+        form{
+            display:grid;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+        }
+        h1{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>user data management</h1>
+    <form id="form">
+        <label for="name">Name</label>
+        <input type="text" id="name" placeholder="enter name">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="enter email">
+        <button type="submit" id="submit">Submit</button>
+    </form>
+    <ul id="display"></ul>
+
+    <script>
+        let title = document.querySelector("#name");
+        let email = document.querySelector("#email");
+        let submitBtn = document.querySelector("#submit");
+        let form = document.getElementById("form");
+        let user = [];
+        let flag = 0;
+
+        form.addEventListener("submit", (event) => {
+            event.preventDefault();
+            const value1 = title.value;
+            const value2 = email.value;
+
+            if (submitBtn.innerHTML !== "Update") {
+                const obj = { title: value1, email: value2 };
+                user.push(obj);
+            } else {
+                user[flag]["title"] = value1;
+                user[flag]["email"] = value2;
+                submitBtn.innerHTML = "Submit";
+            }
+
+            title.value = "";
+            email.value = "";
+            display();
+        });
+
+        function display() {
+            let container = document.querySelector("#display");
+            container.innerHTML = "";
+
+            user.forEach((userData, index) => {
+                let nodeList = document.createElement("li");
+
+                let heading = document.createElement("h4");
+                heading.textContent = userData.title;
+                nodeList.appendChild(heading);
+
+                let para = document.createElement("p");
+                para.textContent = userData.email;
+                nodeList.appendChild(para);
+
+                var del = document.createElement("button");
+                del.innerHTML = "Delete";
+                nodeList.appendChild(del);
+
+                del.addEventListener("click", () => {
+                    user.splice(index, 1);
+                    display();
+                });
+
+                var edit = document.createElement("button");
+                edit.innerHTML = "Edit";
+                nodeList.appendChild(edit);
+
+                edit.addEventListener("click", () => {
+                    title.value = userData.title;
+                    email.value = userData.email;
+                    submitBtn.innerHTML = "Update";
+                    flag = index;
+                });
+
+                container.appendChild(nodeList);
+            });
+        }
+    </script>
+</body>
+</html>
+

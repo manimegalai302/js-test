@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keyboard event</title>
+    <style>
+        body{
+            background-color: #64dddd8f;
+            display: grid;
+            justify-content: center;
+            align-items: center;
+        }
+        form{
+            display: grid;
+            gap: 5px;
+            max-width: 50%;
+        }
+        #display{
+            color: rgb(25, 61, 61);
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>simple text editor using keyboard event</h1>
+
+    <form>
+    <label for="enter">Enter:</label>
+    <textarea id="input" rows="5" cols="20"></textarea>
+   </form>
+
+    <div id="display"></div>
+    <script>
+        const textInput = document.getElementById("input");
+     
+
+        textInput.addEventListener("input", (event) => {
+            const display = document.getElementById("display");
+            const enteredText = event.target.value;
+            display.textContent = enteredText;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>authentication form</title>
+    <style>
+      body{
+        background-color: #fffff0;
+      }
+      .register-form {
+        display: none;
+      }
+      .login-form {
+        display: none;
+      }
+      #logoutBtn{
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>login form</h1>
+    <div>
+      <button id="registerBtn">Register</button>
+      <button id="loginBtn">Login</button>
+    </div>
+    <form class="register-form" id="register-form">
+        <label for="username">username</label>
+        <input type="text" id="usernameInp" />
+      <label for="email">Email</label>
+      <input type="email" id="useremailInp" />
+      <label for="password">Password</label>
+      <input type="password" id="passwordInp" />
+      <button id="submit">Submit</button>
+    </form>
+
+    <form class="login-form" id="login-form">
+      <label for="username">username</label>
+      <input
+        type="text"
+        id="logusernameInp"
+      />
+      <label for="password">Password</label>
+      <input type="password" id="logpasswordInp" required />
+      <button id="loginsubmit">Login</button>
+      <button id="logoutBtn">Logout</button>
+</div>
+    </form>
+
+    <script>
+      let registerButton = document.getElementById("registerBtn");
+      let registerForm = document.getElementById("register-form");
+
+      let loginButton = document.getElementById("loginBtn");
+      let loginForm = document.getElementById("login-form");
+
+      let submitButton = document.getElementById("submit");
+      let loginsubmitButton = document.getElementById("loginsubmit");
+      let logoutButton = document.getElementById("logoutBtn");
+
+      const arr = [];
+
+      registerButton.addEventListener("click", () => {
+        registerForm.style.display = "block";
+        registerForm.style.gap="10px";
+        registerForm.style.padding="20px";
+        // registerform.style.maxwidth="100px";
+      });
+
+      submitButton.addEventListener("click", (e) => {
+        e.preventDefault();
+        let regusermailEle = document.getElementById("useremailInp");
+        let regpasswordEle = document.getElementById("passwordInp");
+        let regusernameEle = document.getElementById("usernameInp");
+
+        let userValue = regusermailEle.value;
+        let passwordValue = regpasswordEle.value;
+        let usernameValue = regusernameEle.value;
+
+        let pattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/; //usermail
+        let pattern1= /^[a-zA-Z0-9._-]{7,15}$/;  //userpassword
+
+        const obj = {
+            username:usernameValue,
+            usermail: userValue,
+            password: passwordValue,
+
+          };
+         
+        if (!userValue.match(pattern) || !passwordValue.match(pattern1)  || !usernameValue.match(pattern1)){ 
+          alert("please enter valid username ,email & password");
+          registerForm.style.display = "block";
+        } 
+        else {
+          arr.push(obj);
+          console.log(userValue)
+          console.log(arr);
+          document.getElementById("usernameInp").value="";
+          document.getElementById("useremailInp").value = "";
+          document.getElementById("passwordInp").value = "";
+
+          registerForm.style.display = "none";
+        }
+      });
+
+      loginButton.addEventListener("click", () => {
+        loginForm.style.display = "block";
+      });
+
+loginsubmitButton.addEventListener("click", (e) => {
+  e.preventDefault();
+  
+  let logusernameEle = document.getElementById("logusernameInp");
+  let logpasswordEle = document.getElementById("logpasswordInp");
+
+  
+  let logUserValue = logusernameEle.value;
+  let logPasswordValue = logpasswordEle.value;
+  
+  const registeredUser = arr.find(item => item.username === logUserValue && item.password === logPasswordValue);
+  
+  if (registeredUser) {
+    alert("login successful");
+    document.getElementById("logusernameInp").value="";
+   document.getElementById("logpasswordInp").value="";
+   loginForm.style.display = "none";
+  } 
+  else {
+    alert("please register");
+  }
+});
+
+
+
+    </script>
+  </body>
+</html>
+
+
+
+ 
+
